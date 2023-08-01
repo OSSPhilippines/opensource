@@ -19,12 +19,3 @@ describe('index.js tests', () => {
     expect(fs.writeFileSync).toHaveBeenCalledWith('README.md', `# ${packageJson.name}\n\n${packageJson.description}\n\n## Author\n\n${packageJson.author}\n\n## License\n\n${packageJson.license}`);
   });
 });
-const { sum, mul } = require('./index');
-
-test('adds 1 + 2 to equal 3', () => {
-  expect(sum(1, 2)).toBe(3);
-});
-
-test('multiplies 3 * 2 to equal 6', () => {
-  expect(mul(3, 2)).toBe(6);
-});
