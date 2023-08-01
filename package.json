@@ -2,7 +2,7 @@
   "name": "@ossph/opensource",
   "version": "1.0.1",
   "description": "Generate Open Source Project",
-  "main": "index.js",
+  "main": "dist/bundle.js",
   "scripts": {
     "test": "jest",
     "publish": "npm publish --access public",
