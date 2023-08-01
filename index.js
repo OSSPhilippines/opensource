@@ -9,10 +9,24 @@ const rl = readline.createInterface({
 rl.question('What is your project name? ', (name) => {
   rl.question('What is your project description? ', (description) => {
     rl.question('What is your project license? ', (license) => {
-      fs.mkdirSync(name);
-      fs.writeFileSync(`${name}/package.json`, JSON.stringify({ name, description, license }, null, 2));
-      fs.writeFileSync(`${name}/LICENSE`, license);
-      rl.close();
+      rl.question('What is the author name for package.json? ', (authorName) => {
+        fs.mkdirSync(name);
+
+        const packageJsonContent = {
+          name,
+          description,
+          license,
+          author: authorName
+        };
+
+        fs.writeFileSync(`${name}/package.json`, JSON.stringify(packageJsonContent, null, 2));
+        fs.writeFileSync(`${name}/LICENSE`, license);
+        fs.writeFileSync(`${name}/README.md`, `# ${name}\n\n${description}`);
+        fs.writeFileSync(`${name}/CONTRIBUTING.md`, `# Contributing to ${name}\n\n`);
+        fs.writeFileSync(`${name}/CODE_OF_CONDUCT.md`, `# Code of Conduct\n\n`);
+
+        rl.close();
+      });
     });
   });
 });

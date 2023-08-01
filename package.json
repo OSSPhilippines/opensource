@@ -1,0 +1,24 @@
+{
+  "name": "@ossph/opensource",
+  "version": "1.0.0",
+  "description": "Generate Open Source Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/OSSPhilippines/opensource.git"
+  },
+  "keywords": [
+    "opensource",
+    "oss",
+    "generator"
+  ],
+  "author": "Joff Tiquez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/OSSPhilippines/opensource/issues"
+  },
+  "homepage": "https://github.com/OSSPhilippines/opensource#readme"
+}
