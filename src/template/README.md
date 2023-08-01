@@ -1,13 +1,13 @@
 # NOTE: Work in progress
 
-# Open Source Project Generator
+# <PROJECT_NAME>
 
-Generate Open Source Project
+<PROJECT_DESCRIPTION>
 
 ## Author
 
-Joff Tiquez
+<AUTHOR_NAME>
 
 ## License
 
-MIT
+<LICENSE>
