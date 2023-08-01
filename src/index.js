@@ -43,6 +43,7 @@ program
 
       const packageJsonContent = {
         name: projectName,
+        version: '0.0.1',
         description,
         license: selectedLicense,
         author: {
