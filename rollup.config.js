@@ -7,9 +7,12 @@ module.exports = {
   output: {
     file: path.resolve(__dirname, 'dist/bundle.js'),
     format: 'cjs',
+    exports: 'auto', // Set output.exports to "auto" to handle CommonJS exports properly
   },
   plugins: [
-    resolve(),
+    resolve({
+      preferBuiltins: true
+    }),
     commonjs()
   ]
 };

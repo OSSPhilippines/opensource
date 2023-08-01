@@ -26,8 +26,13 @@
   "homepage": "https://github.com/OSSPhilippines/opensource#readme",
   "devDependencies": {
     "jest": "^27.2.0",
+    "rollup": "^2.56.3",
     "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup": "^2.56.3"
+    "rollup-plugin-node-resolve": "^5.2.0"
+  },
+  "dependencies": {
+    "browserify-fs": "^1.0.0",
+    "readline-browser": "^0.0.3",
+    "rollup-plugin-node-builtins": "^2.1.2"
   }
 }
