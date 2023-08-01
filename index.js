@@ -26,7 +26,7 @@ rl.question('What is your project name? ', (name) => {
         const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 
         // Generate the README.md content
-        const readmeContent = `# ${packageJson.name}\n\n${packageJson.description}\n\n## Author\n\n${packageJson.author}\n\n## License\n\n${packageJson.license}`;
+        const readmeContent = `# Open Source Project Generator\n\n${packageJson.description}\n\n## Author\n\n${packageJson.author}\n\n## License\n\n${packageJson.license}`;
 
         // Write the README.md file
         fs.writeFileSync('README.md', readmeContent);
