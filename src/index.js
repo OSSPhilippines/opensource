@@ -5,12 +5,12 @@ const path = require('path');
 const TIMEOUT = Math.floor(Math.random() * 2000) + 1000;
 
 const licenses = [
-  'MIT',
   'Apache-2.0',
+  'BSD-3-Clause',
   'GPL-3.0',
   'ISC',
-  'BSD-3-Clause',
-  'Unlicense'
+  'MIT',
+  'Unlicense',
 ];
 
 program
