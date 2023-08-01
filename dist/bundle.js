@@ -3375,19 +3375,19 @@ commander.Option;
 
 const { program } = commander;
 
+const TIMEOUT = Math.floor(Math.random() * 2000) + 1000;
 
 const licenses = [
-  'MIT',
   'Apache-2.0',
+  'BSD-3-Clause',
   'GPL-3.0',
   'ISC',
-  'BSD-3-Clause',
-  'Unlicense'
+  'MIT',
 ];
 
 program
   .version('1.0.0')
-  .description('Open Source Project Generator')
+  .description('🚀 Open Source Project Generator')
   .arguments('<projectName>')
   .action(async (projectName) => {
     const rl = readline__default["default"].createInterface({
@@ -3396,21 +3396,21 @@ program
     });
 
     try {
-      const description = await promptQuestion(rl, 'What is your project description? ');
-      const selectedLicense = await promptQuestion(rl, `Choose a license for your project (${licenses.join(', ')}): `);
+      const description = await promptQuestion(rl, '📝 What is your project description? ');
+      const selectedLicense = await promptQuestion(rl, `📜 Choose a license for your project (${licenses.join(', ')}): `);
 
       if (!licenses.includes(selectedLicense)) {
-        console.error('Invalid license selection. Please choose from the provided options.');
+        console.error('❌ Invalid license selection. Please choose from the provided options.');
         rl.close();
         return;
       }
 
-      const authorName = await promptQuestion(rl, 'What is the author name? ');
-      const authorEmail = await promptQuestion(rl, 'What is the author email? ');
+      const authorName = await promptQuestion(rl, '👤 What is the author name? ');
+      const authorEmail = await promptQuestion(rl, '📧 What is the author email? ');
 
       // Add a fake loading effect
-      console.log('Generating project files...');
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Fake loading for 2 seconds
+      console.log('🔧 Generating project files...');
+      await new Promise((resolve) => setTimeout(resolve, TIMEOUT)); // Fake loading for 2 seconds
 
       fs__default["default"].mkdirSync(projectName);
 
@@ -3424,11 +3424,15 @@ program
         }
       };
 
-      fs__default["default"].writeFileSync(`${projectName}/LICENSE`, selectedLicense);
+      // Create the LICENSE file using the selected license template
+      const licenseTemplatePath = path__default["default"].join(__dirname, 'templates', 'licenses', `${selectedLicense}_LICENSE.md`);
+      const licenseTemplate = fs__default["default"].readFileSync(licenseTemplatePath, 'utf8');
+
+      fs__default["default"].writeFileSync(`${projectName}/LICENSE`, licenseTemplate);
       fs__default["default"].writeFileSync(`${projectName}/package.json`, JSON.stringify(packageJsonContent, null, 2));
 
       // Use path to construct the template file paths
-      const templateDir = path__default["default"].join(__dirname, 'template');
+      const templateDir = path__default["default"].join(__dirname, 'templates');
       const readmeTemplate = fs__default["default"].readFileSync(path__default["default"].join(templateDir, 'README.md'), 'utf8');
       const contributingTemplate = fs__default["default"].readFileSync(path__default["default"].join(templateDir, 'CONTRIBUTING.md'), 'utf8');
       const codeOfConductTemplate = fs__default["default"].readFileSync(path__default["default"].join(templateDir, 'CODE_OF_CONDUCT.md'), 'utf8');
@@ -3455,9 +3459,9 @@ program
       fs__default["default"].writeFileSync(`${projectName}/CHANGELOG.md`, changelogContent);
 
       // Fake loading complete. Show success message.
-      console.log('Project files generated successfully!');
+      console.log('✅ Project files generated successfully!');
     } catch (error) {
-      console.error('An error occurred:', error.message);
+      console.error('❌ An error occurred:', error.message);
     } finally {
       rl.close();
     }

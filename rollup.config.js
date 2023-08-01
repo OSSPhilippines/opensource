@@ -17,10 +17,7 @@ module.exports = {
     commonjs(),
     copy({
       targets: [
-        { src: 'src/template/README.md', dest: 'dist/template/' },
-        { src: 'src/template/CHANGELOG.md', dest: 'dist/template/' },
-        { src: 'src/template/CODE_OF_CONDUCT.md', dest: 'dist/template/' },
-        { src: 'src/template/CONTRIBUTING.md', dest: 'dist/template/' },
+        { src: 'src/templates/*', dest: 'dist/templates' },
       ]
     })
   ]

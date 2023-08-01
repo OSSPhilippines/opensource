@@ -10,7 +10,6 @@ const licenses = [
   'GPL-3.0',
   'ISC',
   'MIT',
-  'Unlicense',
 ];
 
 program
@@ -52,7 +51,11 @@ program
         }
       };
 
-      fs.writeFileSync(`${projectName}/LICENSE`, selectedLicense);
+      // Create the LICENSE file using the selected license template
+      const licenseTemplatePath = path.join(__dirname, 'templates', 'licenses', `${selectedLicense}_LICENSE.md`);
+      const licenseTemplate = fs.readFileSync(licenseTemplatePath, 'utf8');
+
+      fs.writeFileSync(`${projectName}/LICENSE`, licenseTemplate);
       fs.writeFileSync(`${projectName}/package.json`, JSON.stringify(packageJsonContent, null, 2));
 
       // Use path to construct the template file paths
