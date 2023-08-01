@@ -3,6 +3,7 @@
   "version": "1.1.1",
   "description": "Generate Open Source Project",
   "main": "dist/bundle.js",
+  "bin": "./dist/bundle.js",
   "scripts": {
     "test": "jest",
     "publish": "npm publish --access public",
