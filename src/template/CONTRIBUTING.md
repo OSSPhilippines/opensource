@@ -1,10 +1,10 @@
-# Contributing
+# Contributing to <PROJECT_NAME>
 
-First off, thank you for considering contributing to this project. It's people like you that make open source possible.
+First off, thank you for considering contributing to <PROJECT_NAME>. It's people like you that make open source possible. <PROJECT_NAME> is <PROJECT_DESCRIPTION> by <AUTHOR_NAME>.
 
 ## 1. Where do I go from here?
 
-If you've noticed a bug or have a feature request, make sure to check our [issues](https://github.com/yourusername/yourrepository/issues) if there's something similar to what you have in mind. If there isn't, you can open a new issue and provide as much detail as possible about what you'd like to see or what problem you're experiencing.
+If you've noticed a bug or have a feature request, make sure to check our [issues](https://github.com/<AUTHOR_NAME>/<PROJECT_NAME>/issues) if there's something similar to what you have in mind. If there isn't, you can open a new issue and provide as much detail as possible about what you'd like to see or what problem you're experiencing.
 
 ## 2. Fork & create a branch
 
@@ -28,4 +28,4 @@ At this point, you should switch back to your forked copy of the repository, and
 
 ## License
 
-By contributing your code, you agree to license your contribution under the terms of the MIT license.
+By contributing your code, you agree to license your contribution under the terms of the <LICENSE> license.
