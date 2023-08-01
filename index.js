@@ -21,7 +21,16 @@ rl.question('What is your project name? ', (name) => {
 
         fs.writeFileSync(`${name}/package.json`, JSON.stringify(packageJsonContent, null, 2));
         fs.writeFileSync(`${name}/LICENSE`, license);
-        fs.writeFileSync(`${name}/README.md`, `# ${name}\n\n${description}`);
+
+        // Read the package.json file
+        const packageJson = JSON.parse(fs.readFileSync(`${name}/package.json`, 'utf8'));
+
+        // Generate the README.md content
+        const readmeContent = `# ${packageJson.name}\n\n${packageJson.description}\n\n## Author\n\n${packageJson.author}\n\n## License\n\n${packageJson.license}`;
+
+        // Write the README.md file
+        fs.writeFileSync(`${name}/README.md`, readmeContent);
+
         fs.writeFileSync(`${name}/CONTRIBUTING.md`, `# Contributing to ${name}\n\n`);
         fs.writeFileSync(`${name}/CODE_OF_CONDUCT.md`, `# Code of Conduct\n\n`);
 
