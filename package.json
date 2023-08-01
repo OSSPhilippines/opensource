@@ -28,11 +28,13 @@
     "jest": "^27.2.0",
     "rollup": "^2.56.3",
     "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-node-resolve": "^5.2.0"
   },
   "dependencies": {
     "browserify-fs": "^1.0.0",
     "commander": "^11.0.0",
+    "inquirer": "^9.2.9",
     "readline-browser": "^0.0.3",
     "rollup-plugin-node-builtins": "^2.1.2"
   }

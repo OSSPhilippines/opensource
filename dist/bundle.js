@@ -3375,6 +3375,7 @@ commander.Option;
 
 const { program } = commander;
 
+
 const licenses = [
   'MIT',
   'Apache-2.0',
@@ -3388,61 +3389,87 @@ program
   .version('1.0.0')
   .description('Open Source Project Generator')
   .arguments('<projectName>')
-  .action((projectName) => {
+  .action(async (projectName) => {
     const rl = readline__default["default"].createInterface({
       input: process.stdin,
       output: process.stdout
     });
 
-    rl.question('What is your project description? ', (description) => {
-      rl.question(`Choose a license for your project (${licenses.join(', ')}): `, (selectedLicense) => {
-        if (!licenses.includes(selectedLicense)) {
-          console.error('Invalid license selection. Please choose from the provided options.');
-          rl.close();
-          return;
+    try {
+      const description = await promptQuestion(rl, 'What is your project description? ');
+      const selectedLicense = await promptQuestion(rl, `Choose a license for your project (${licenses.join(', ')}): `);
+
+      if (!licenses.includes(selectedLicense)) {
+        console.error('Invalid license selection. Please choose from the provided options.');
+        rl.close();
+        return;
+      }
+
+      const authorName = await promptQuestion(rl, 'What is the author name? ');
+      const authorEmail = await promptQuestion(rl, 'What is the author email? ');
+
+      // Add a fake loading effect
+      console.log('Generating project files...');
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // Fake loading for 2 seconds
+
+      fs__default["default"].mkdirSync(projectName);
+
+      const packageJsonContent = {
+        name: projectName,
+        description,
+        license: selectedLicense,
+        author: {
+          name: authorName,
+          email: authorEmail
         }
+      };
 
-        rl.question('What is the author name for package.json? ', (authorName) => {
-          fs__default["default"].mkdirSync(projectName);
+      fs__default["default"].writeFileSync(`${projectName}/LICENSE`, selectedLicense);
+      fs__default["default"].writeFileSync(`${projectName}/package.json`, JSON.stringify(packageJsonContent, null, 2));
 
-          const packageJsonContent = {
-            name: projectName,
-            description,
-            license: selectedLicense,
-            author: authorName
-          };
+      // Use path to construct the template file paths
+      const templateDir = path__default["default"].join(__dirname, 'template');
+      const readmeTemplate = fs__default["default"].readFileSync(path__default["default"].join(templateDir, 'README.md'), 'utf8');
+      const contributingTemplate = fs__default["default"].readFileSync(path__default["default"].join(templateDir, 'CONTRIBUTING.md'), 'utf8');
+      const codeOfConductTemplate = fs__default["default"].readFileSync(path__default["default"].join(templateDir, 'CODE_OF_CONDUCT.md'), 'utf8');
+      const changelogTemplate = fs__default["default"].readFileSync(path__default["default"].join(templateDir, 'CHANGELOG.md'), 'utf8');
 
-          fs__default["default"].writeFileSync(`${projectName}/package.json`, JSON.stringify(packageJsonContent, null, 2));
-          fs__default["default"].writeFileSync(`${projectName}/LICENSE`, selectedLicense);
+      const readmeContent = readmeTemplate
+        .replace('<DESCRIPTION>', description)
+        .replace('<AUTHOR>', authorName)
+        .replace('<LICENSE>', selectedLicense);
 
-          // Read the template files and replace placeholders with user input
-          const readmeTemplate = fs__default["default"].readFileSync('./template/README.md', 'utf8');
-          const contributingTemplate = fs__default["default"].readFileSync('./template/CONTRIBUTING.md', 'utf8');
-          const codeOfConductTemplate = fs__default["default"].readFileSync('./template/CODE_OF_CONDUCT.md', 'utf8');
+      const contributingContent = contributingTemplate
+        .replace('<PROJECT_NAME>', projectName);
 
-          const readmeContent = readmeTemplate
-            .replace('<DESCRIPTION>', description)
-            .replace('<AUTHOR>', authorName)
-            .replace('<LICENSE>', selectedLicense);
+      const codeOfConductContent = codeOfConductTemplate
+        .replace('<PROJECT_NAME>', projectName);
 
-          const contributingContent = contributingTemplate
-            .replace('<PROJECT_NAME>', projectName);
+      const changelogContent = changelogTemplate
+        .replace('<PROJECT_NAME>', projectName);
 
-          const codeOfConductContent = codeOfConductTemplate
-            .replace('<PROJECT_NAME>', projectName);
+      // Write the modified template files
+      fs__default["default"].writeFileSync(`${projectName}/README.md`, readmeContent);
+      fs__default["default"].writeFileSync(`${projectName}/CONTRIBUTING.md`, contributingContent);
+      fs__default["default"].writeFileSync(`${projectName}/CODE_OF_CONDUCT.md`, codeOfConductContent);
+      fs__default["default"].writeFileSync(`${projectName}/CHANGELOG.md`, changelogContent);
 
-          // Write the modified template files
-          fs__default["default"].writeFileSync(`${projectName}/README.md`, readmeContent);
-          fs__default["default"].writeFileSync(`${projectName}/CONTRIBUTING.md`, contributingContent);
-          fs__default["default"].writeFileSync(`${projectName}/CODE_OF_CONDUCT.md`, codeOfConductContent);
-
-          rl.close();
-        });
-      });
-    });
+      // Fake loading complete. Show success message.
+      console.log('Project files generated successfully!');
+    } catch (error) {
+      console.error('An error occurred:', error.message);
+    } finally {
+      rl.close();
+    }
   });
 
 program.parse(process.argv);
+
+function promptQuestion(rl, question) {
+  return new Promise((resolve) => {
+    rl.question(question, resolve);
+  });
+}
 
 var src = {
 
