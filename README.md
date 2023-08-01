@@ -1,6 +1,6 @@
-# NOTE: Work in progress
+🔓🔍🔧💻💡🌐🚀
 
-# Open Source Project Generator
+# Open Source Project Generator 🏗️💡🔧
 
 An easy to use boilerplate for open source projects with the following features:
 
