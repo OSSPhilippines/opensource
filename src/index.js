@@ -1,6 +1,7 @@
 const fs = require('fs');
 const readline = require('readline');
 const { program } = require('commander');
+const path = require('path');
 
 const licenses = [
   'MIT',
@@ -29,32 +30,52 @@ program
           return;
         }
 
-        rl.question('What is the author name for package.json? ', (authorName) => {
-          fs.mkdirSync(projectName);
+        rl.question('What is the author name? ', (authorName) => {
+          rl.question('What is the author email? ', (authorEmail) => {
+            fs.mkdirSync(projectName);
 
-          const packageJsonContent = {
-            name: projectName,
-            description,
-            license: selectedLicense,
-            author: authorName
-          };
+            const packageJsonContent = {
+              name: projectName,
+              description,
+              license: selectedLicense,
+              author: {
+                name: authorName,
+                email: authorEmail
+              }
+            };
 
-          fs.writeFileSync(`${projectName}/package.json`, JSON.stringify(packageJsonContent, null, 2));
-          fs.writeFileSync(`${projectName}/LICENSE`, selectedLicense);
+            fs.writeFileSync(`${projectName}/LICENSE`, selectedLicense);
+            fs.writeFileSync(`${projectName}/package.json`, JSON.stringify(packageJsonContent, null, 2));
 
-          // Read the package.json file from the project directory
-          const packageJson = JSON.parse(fs.readFileSync(`${projectName}/package.json`, 'utf8'));
+            // Use path to construct the template file paths
+            const templateDir = path.join(__dirname, 'template');
+            const readmeTemplate = fs.readFileSync(path.join(templateDir, 'README.md'), 'utf8');
+            const contributingTemplate = fs.readFileSync(path.join(templateDir, 'CONTRIBUTING.md'), 'utf8');
+            const codeOfConductTemplate = fs.readFileSync(path.join(templateDir, 'CODE_OF_CONDUCT.md'), 'utf8');
+            const changelogTemplate = fs.readFileSync(path.join(templateDir, 'CHANGELOG.md'), 'utf8');
 
-          // Generate the README.md content
-          const readmeContent = `# Open Source Project Generator\n\n${packageJson.description}\n\n## Author\n\n${packageJson.author}\n\n## License\n\n${packageJson.license}`;
+            const readmeContent = readmeTemplate
+              .replace('<DESCRIPTION>', description)
+              .replace('<AUTHOR>', authorName)
+              .replace('<LICENSE>', selectedLicense);
 
-          // Write the README.md file
-          fs.writeFileSync(`${projectName}/README.md`, readmeContent);
+            const contributingContent = contributingTemplate
+              .replace('<PROJECT_NAME>', projectName);
 
-          fs.writeFileSync(`${projectName}/CONTRIBUTING.md`, `# Contributing to ${projectName}\n\n`);
-          fs.writeFileSync(`${projectName}/CODE_OF_CONDUCT.md`, `# Code of Conduct\n\n`);
+            const codeOfConductContent = codeOfConductTemplate
+              .replace('<PROJECT_NAME>', projectName);
 
-          rl.close();
+            const changelogContent = changelogTemplate
+              .replace('<PROJECT_NAME>', projectName);
+
+            // Write the modified template files
+            fs.writeFileSync(`${projectName}/README.md`, readmeContent);
+            fs.writeFileSync(`${projectName}/CONTRIBUTING.md`, contributingContent);
+            fs.writeFileSync(`${projectName}/CODE_OF_CONDUCT.md`, codeOfConductContent);
+            fs.writeFileSync(`${projectName}/CHANGELOG.md`, changelogContent);
+
+            rl.close();
+          });
         });
       });
     });
